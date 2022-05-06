@@ -1,41 +1,25 @@
 class Solution {
-    public class Pair {
-        char c;
-        int n;
-        
-        public Pair(char curr) {
-            c = curr;
-            n = 1;
-        }
-        
-        public void increment() {
-            n++;
-        }
-        
-        public String stringRep() {
-            // StringBuilder s = new StringBuilder();
-            // for(int i = 0; i < n; i++) s.append(c);
-            // return s.toString();
-            return Character.toString(c).repeat(n);
-        }
-    }
     public String removeDuplicates(String s, int k) {
-        Stack<Pair> st = new Stack();
-        char curr;
+        Stack<int[]> st = new Stack();
+        char c;
         for(int i = 0; i < s.length(); i++) {
             
-            curr = s.charAt(i);
-            if(st.empty() || st.peek().c != curr) st.push(new Pair(curr));
-            else st.peek().increment();
+            c = s.charAt(i);
             
+            if(st.empty() || st.peek()[0] != c) {
+                st.push(new int[] {c, 1});
+            }
+            else {
+                st.peek()[1]++;
+            }
             
-            if(st.peek().n == k) st.pop();
+            if(st.peek()[1] == k) st.pop();
+        }
+        StringBuilder result = new StringBuilder();
+        for(int[] a : st) {
+            while(a[1]-- > 0) result.append((char)a[0]);
         }
         
-        StringBuilder result = new StringBuilder();
-        for(Pair p : st) {
-            result.append(p.stringRep());
-        }
         return result.toString();
     }
 }
