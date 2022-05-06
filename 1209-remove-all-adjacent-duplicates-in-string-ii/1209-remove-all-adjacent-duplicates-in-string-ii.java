@@ -32,9 +32,9 @@ class Solution {
         }
         
         StringBuilder result = new StringBuilder();
-        while(!st.empty()) {
-            result.append(st.pop().stringRep());
+        for(Pair p : st) {
+            result.append(p.stringRep());
         }
-        return result.reverse().toString();
+        return result.toString();
     }
 }
