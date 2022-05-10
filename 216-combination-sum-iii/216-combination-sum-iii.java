@@ -10,9 +10,9 @@ class Solution {
             res.add(new ArrayList<>(temp));
             return;
         }
-        for(;start < 10; start++){
-            temp.add(start);
-            helper(start + 1, k, n -start, temp, res);
+        for(int i = start; i <= 9; i++){
+            temp.add(i);
+            helper(i + 1, k, n - i, temp, res);
             temp.remove(temp.size() - 1);
         }
     }
