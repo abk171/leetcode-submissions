@@ -5,7 +5,7 @@ class Solution {
         return res;
     }
     public void helper(int start, int k, int n, List<Integer> temp, List<List<Integer>> res){
-        if(n < 0) return;
+        // if(n < 0) return;
         if(n == 0 && temp.size() == k){
             res.add(new ArrayList<>(temp));
             return;
