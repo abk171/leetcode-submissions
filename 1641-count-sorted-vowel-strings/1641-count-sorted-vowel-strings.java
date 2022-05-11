@@ -1,20 +1,14 @@
 class Solution {
-    int count = 0;
     public int countVowelStrings(int n) {
-        
-        // char[] arr = {'a', 'e', 'i', 'o', 'u'};
-        helper(n, 0);
-        return count;
-    }
-    
-    public void helper(int n, int index) {
-        // System.out.println(count);
-        if(n <= 0) {
-            count++; return;
+        int[] store = new int[5];
+        for(int i = 0; i < store.length; i++) store[i] = 1;
+        while(n-- > 1) {
+            for(int i = 3; i >= 0; i--) {
+                store[i] += store[i+1];
+            }
         }
-        
-        for(;index < 5; index++) {
-            helper( n - 1, index);
-        }
+        int result = 0;
+        for(int i = 0; i < store.length; i++) result += store[i];
+        return result;
     }
 }
