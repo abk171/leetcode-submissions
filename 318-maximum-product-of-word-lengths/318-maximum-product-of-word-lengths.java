@@ -1,5 +1,13 @@
 class Solution {
+    
+    
     public int maxProduct(String[] words) {
+        Arrays.sort(words, new Comparator<String>() {
+           @Override
+            public int compare(String a, String b) {
+                return Integer.compare(a.length(), b.length()) * -1;
+            }
+        });
         int[] masks = new int[words.length];
         for(int i = 0; i < words.length; i++)
             for(int j = 0; j < words[i].length(); j++)
