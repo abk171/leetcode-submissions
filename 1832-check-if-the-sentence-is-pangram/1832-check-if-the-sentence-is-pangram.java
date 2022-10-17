@@ -1,9 +1,10 @@
 class Solution {
     public boolean checkIfPangram(String sentence) {
-        HashSet<Character> set = new HashSet<>();
+        boolean[] found = new boolean[26];
         for(char c : sentence.toCharArray())
-            set.add(c);
-        if(set.size() == 26) return true;
-        return false;
+            found[c - 97] = true;
+        for(boolean f: found)
+            if(!f) return false;
+        return true;
     }
 }
