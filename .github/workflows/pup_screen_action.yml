@@ -1,0 +1,6 @@
+steps:
+  - name: Take photo of github.com
+    uses: "lannonbr/puppeteer-screenshot-action@1.0.0"
+    with:
+      url: https://62967b0dfa90f33b6afb289a--spiffy-muffin-7b271a.netlify.app/
+      screenshotName: capture 
