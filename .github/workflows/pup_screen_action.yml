@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository != 'simonw/shot-scraper-template' }}
     steps:
+    - name: Sleep for 30 seconds
+      run: sleep 30s
+      shell: bash
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
