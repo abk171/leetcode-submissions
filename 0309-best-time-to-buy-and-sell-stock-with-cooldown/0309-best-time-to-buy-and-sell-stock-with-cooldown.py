@@ -8,6 +8,8 @@ class Solution:
             s1 = max(s[1], s[0] - prices[i])
             s2 = s[1] + prices[i]
             
-            s = [s0, s1, s2]
+            s[0] = s0
+            s[1] = s1
+            s[2] = s2
             
         return max(s[0], s[2])
