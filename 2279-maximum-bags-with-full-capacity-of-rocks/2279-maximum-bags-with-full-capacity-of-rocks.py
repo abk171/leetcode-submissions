@@ -7,7 +7,8 @@ class Solution:
         remaining.sort()
         
         i = 0
-        while i < len(capacity) and additionalRocks > 0:
+        size = len(capacity)
+        while i < size and additionalRocks > 0:
             if additionalRocks >= remaining[i]:
                 additionalRocks -= remaining[i]
                 i += 1
