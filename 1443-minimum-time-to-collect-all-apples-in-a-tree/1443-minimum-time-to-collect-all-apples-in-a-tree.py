@@ -11,24 +11,37 @@ class Solution:
             if apple:
                 apples.append(i)
         
-        distances = [float('inf') for _ in range(n)]
-        distances[0] = 0
+#         distances = [float('inf') for _ in range(n)]
+#         distances[0] = 0
+#         parent = [i for i in range(n)]
+        
+#         q = queue.PriorityQueue()
+#         for i, distance in enumerate(distances):
+#             q.put((distance, i))
+        
+#         visited = [False for _ in range(n)]
+        
+#         while not q.empty():
+#             distance, x = q.get()
+#             for y in adj[x]:
+#                 if distances[y] > 1 + distance:
+#                     distances[y] = 1 + distance
+#                     parent[y] = x
+#                     q.put((distances[y], y))
+#             visited[x] = True
+
         parent = [i for i in range(n)]
-        
-        q = queue.PriorityQueue()
-        for i, distance in enumerate(distances):
-            q.put((distance, i))
-        
         visited = [False for _ in range(n)]
         
-        while not q.empty():
-            distance, x = q.get()
-            for y in adj[x]:
-                if distances[y] > 1 + distance:
-                    distances[y] = 1 + distance
-                    parent[y] = x
-                    q.put((distances[y], y))
-            visited[x] = True
+        def dfs(i):
+            visited[i] = True
+            for y in adj[i]:
+                if not visited[y]:
+                    dfs(y)
+                    parent[y] = i
+
+        
+        dfs(0)
         
         visited_edges = set()
         
