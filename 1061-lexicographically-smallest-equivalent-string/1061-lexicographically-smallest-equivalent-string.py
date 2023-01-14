@@ -6,7 +6,8 @@ class disjointSet:
         if i == self.parent[i]:
             return i
         else:
-            return self.find(self.parent[i])
+            self.parent[i] = self.find(self.parent[i])
+            return self.parent[i]
     
     def join(self, a, b):
         pa = self.find(a)
