@@ -11,12 +11,12 @@ class Solution:
             while a or b:
                 
                 if not a:
-                    rptr.next = ListNode(b.val)
-                    b = b.next
+                    rptr.next = b
+                    b = None
                     
                 elif not b:
-                    rptr.next = ListNode(a.val)
-                    a = a.next
+                    rptr.next = a
+                    a = None
                 
                 else:
                     if a.val < b.val:
