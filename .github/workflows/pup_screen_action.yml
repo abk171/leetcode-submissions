@@ -64,3 +64,10 @@ jobs:
         git commit -m "${timestamp}" || exit 0
         git pull --rebase
         git push
+    - name: Update timestamp
+      run: |-
+        sed -i 's/Last updated: .*/Last updated: '"$(date)"'/g' README.md
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+        git commit -m "Update README with latest timestamp" -a || true
+        git push
