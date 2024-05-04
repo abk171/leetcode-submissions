@@ -1,6 +1,12 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        s_sort = ''.join(sorted(s))
-        t_sort = ''.join(sorted(t))
-        
-        return s_sort == t_sort
+        arr = [0 for _ in range(26)]
+        for c in s:
+            arr[ord(c) - ord('a')] += 1
+        for c in t:
+            arr[ord(c) - ord('a')] -= 1
+
+        for a in arr:
+            if a != 0:
+                return False
+        return True
