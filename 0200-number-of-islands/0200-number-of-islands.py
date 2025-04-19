@@ -1,28 +1,32 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        m = len(grid[0])
-        n = len(grid)
-        visited = [[False for _ in range(m)] for _ in range(n)]
+        m = len(grid)
+        n = len(grid[0])
+
         
-        islands = 0
-        
-        def dfs(i, j):
-            if i < 0 or i > n - 1 or j < 0 or j > m - 1 or grid[i][j] == "0" or visited[i][j]:
+
+        def explore(x, y):
+            if x < 0 or y < 0 or x >= n or y >= m:
+                return
+
+            if grid[y][x] == '0':
                 return
             
-            visited[i][j] = True
-            
-            directions = [[0, 1], [-1, 0], [0, -1], [1, 0]]
-            
-            for di, dj in directions:
-                ni, nj = i + di, j + dj
-                dfs(ni, nj)
+            grid[y][x] = '0'
+
+            delx = [-1, 0, 1, 0]
+            dely = [0, -1, 0, 1]
+
+            for dx, dy in zip(delx, dely):
+                    explore(x + dx, y + dy)
         
-        for i in range(n):
-            for j in range(m):
-                if grid[i][j] == "1" and not visited[i][j]:
-                    dfs(i,j)
-                    islands += 1
-        print(visited)
-        return islands
+        count = 0
         
+        for x in range(n):
+            for y in range(m):
+                if grid[y][x] == '0':
+                    continue
+                explore(x, y)
+                count += 1
+                
+        return count
