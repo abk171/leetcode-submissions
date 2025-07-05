@@ -1,16 +1,9 @@
 class Solution:
     def findLucky(self, arr: List[int]) -> int:
-        m = {}
+        frequencies = [0 for _ in range(501)]
         for i in arr:
-            if i in m:
-                m[i] += 1
-            else:
-                m[i] = 1
-
-        max_i = -1
-        for i, freq in m.items():
-            if freq == i and i > max_i:
-                max_i = i
-        
-
-        return max_i
+            frequencies[i] += 1
+        for i in range(500, 0, -1):
+            if frequencies[i] == i:
+                return frequencies[i]
+        return -1
