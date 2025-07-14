@@ -5,6 +5,7 @@ on:
     paths-ignore:
       - 'shots.yml'
       - 'README.md'
+      - 'shot.png'
 
 concurrency:
   group: screenshots
