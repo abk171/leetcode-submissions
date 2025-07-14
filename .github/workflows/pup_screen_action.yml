@@ -1,24 +1,38 @@
 name: Take screenshots
 
-on: [push]
-  
+on:
+  push:
+    paths-ignore:
+      - 'shots.yml'
+      - 'README.md'
+
+concurrency:
+  group: screenshots
+  cancel-in-progress: true
 
 permissions:
   contents: write
 
 jobs:
   shot-scraper:
+    # Skip if last commit was automated to prevent self-trigger loops
+    if: |
+      !contains(github.event.head_commit.message, 'Automated screenshot update') &&
+      !contains(github.event.head_commit.message, 'Update README with latest timestamp')
     runs-on: ubuntu-latest
-    if: ${{ github.repository != 'simonw/shot-scraper-template' }}
+
     steps:
     - name: Sleep for 30 seconds
       run: sleep 30s
       shell: bash
+
     - uses: actions/checkout@v3
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+
     - uses: actions/cache@v3
       name: Configure pip caching
       with:
@@ -26,17 +40,21 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
     - name: Cache Playwright browsers
       uses: actions/cache@v3
       with:
         path: ~/.cache/ms-playwright/
         key: ${{ runner.os }}-browsers
+
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+
     - name: Install Playwright dependencies
       run: |
         shot-scraper install
+
     - uses: actions/github-script@v6
       name: Create shots.yml if missing on first run
       with:
@@ -52,19 +70,22 @@ jobs:
               }
               fs.writeFileSync('shots.yml', line + '\n');
           }
+
     - name: Take shots
       run: |
         shot-scraper multi shots.yml
-    - name: Commit and push
+
+    - name: Commit and push screenshots
       run: |-
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
         git add -A
         timestamp=$(date -u)
-        git commit -m "${timestamp}" || exit 0
+        git commit -m "Automated screenshot update ${timestamp}" || exit 0
         git pull --rebase
         git push
-    - name: Update timestamp
+
+    - name: Update README timestamp
       run: |-
         sed -i 's/Last updated: .*/Last updated: '"$(date)"'/g' README.md
         git config user.name "${{ github.actor }}"
